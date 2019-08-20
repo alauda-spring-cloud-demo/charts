@@ -24,18 +24,18 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: {{ .Values.env.user }}
+            - name: RABBITMQ_DEFAULT_PASSWORD
+              value: {{ .Values.env.password }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: tcp-5672
+              containerPort: 5672
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            - name: http-15672
+              containerPort: 15672
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

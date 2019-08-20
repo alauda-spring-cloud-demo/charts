@@ -14,7 +14,7 @@ spec:
     - port: 15672
       targetPort: 15672
       protocol: TCP
-      name: tcp-15672
+      name: http-15672
   selector:
     app.kubernetes.io/name: {{ include "rabbitmq.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
