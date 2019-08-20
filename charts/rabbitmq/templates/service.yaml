@@ -5,12 +5,16 @@ metadata:
   labels:
 {{ include "rabbitmq.labels" . | indent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 5672
+      targetPort: 5672
       protocol: TCP
-      name: http
+      name: tcp-5672
+    - port: 15672
+      targetPort: 15672
+      protocol: TCP
+      name: tcp-15672
   selector:
     app.kubernetes.io/name: {{ include "rabbitmq.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
