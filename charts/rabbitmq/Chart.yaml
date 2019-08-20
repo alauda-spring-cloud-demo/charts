@@ -3,4 +3,4 @@ appVersion: "1.0"
 description: rabbitmq with stomp
 name: rabbitmq
 version: 0.1.0
-icon: https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2895769818,2867125439&fm=26&gp=0.jpg
+icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
