@@ -30,11 +30,11 @@ spec:
             - name: RABBITMQ_DEFAULT_PASSWORD
               value: {{ .Values.env.password }}
           ports:
-            - name: tcp-5672
-              containerPort: 5672
+            - name: tcp-{{ .Values.service.amqp.port }}
+              containerPort: {{ .Values.service.amqp.port }}
               protocol: TCP
-            - name: http-15672
-              containerPort: 15672
+            - name: http-{{ .Values.service.management.port }}
+              containerPort: {{ .Values.service.management.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
