@@ -1,0 +1,3 @@
+dependencies:
+  - name: rabbitmq
+    version: 1.0
