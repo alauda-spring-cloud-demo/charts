@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args:  ['{{ include "rabbitmq.fullname" . }}:{{ .Values.service.port }}']
+      args:  ['{{ include "rabbitmq.fullname" . }}:15672']
   restartPolicy: Never
