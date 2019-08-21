@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "pinpoint-collector.fullname" . }}-test-connection"
+  labels:
+{{ include "pinpoint-collector.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "pinpoint-collector.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

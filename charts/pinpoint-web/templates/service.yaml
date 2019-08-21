@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pinpoint-web.fullname" . }}
+  labels:
+{{ include "pinpoint-web.labels" . | indent 4 }}
+spec:
+  type: ClusterIP
+  name: pinpoint-collector
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http-8080
+    - port: 9997
+      targetPort: 9997
+      protocol: TCP
+      name: http-9997
+  selector:
+    app.kubernetes.io/name: {{ include "pinpoint-web.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "pinpoint-hbase.fullname" . }}
+  name: {{ include "pinpoint-web.fullname" . }}
   labels:
-{{ include "pinpoint-hbase.labels" . | indent 4 }}
+{{ include "pinpoint-web.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "pinpoint-hbase.name" . }}
+      app.kubernetes.io/name: {{ include "pinpoint-web.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "pinpoint-hbase.name" . }}
+        app.kubernetes.io/name: {{ include "pinpoint-web.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -25,24 +25,29 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: HBASE_OPTS
-              value: "{{ .Values.env.hbase.opts }}"
+            - name: JAVA_OPTS
+              value: "{{ .Values.env.java.opts }}"
+            - name: HBASE_HOST
+              value: "{{ .Values.env.hbase.host }}"
+            - name: HBASE_PORT
+              value: "{{ .Values.env.hbase.port }}"
+            - name: DEBUG_LEVEL
+              value: "{{ .Values.env.debug.level }}"
+            - name: FLINK_CLUSTER_ENABLE
+              value: "false"
+            - name: CLUSTER_ENABLE
+              value: "false"
+            - name: ANALYTICS
+              value: "false"
+            - name: BATCH_ENABLE
+              value: "false"
           ports:
-            - containerPort: 2181
+            - containerPort: 8080
               protocol: TCP
-              name: tcp-2181
-            - containerPort: 60000
+              name: http-8080
+            - containerPort: 9997
               protocol: TCP
-              name: tcp-60000
-            - containerPort: 16010
-              protocol: TCP
-              name: http-16010
-            - containerPort: 60020
-              protocol: TCP
-              name: tcp-60020
-            - containerPort: 16030
-              protocol: TCP
-              name: http-16030
+              name: http-9997
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

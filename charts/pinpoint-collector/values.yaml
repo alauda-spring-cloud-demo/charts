@@ -1,17 +1,17 @@
-# Default values for pinpoint-hbase.
+# Default values for pinpoint-collector.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: dwgao/pinpoint-hbase
+  repository: dwgao/pinpoint-collector
   tag: v1.8.4
   pullPolicy: Always
 
 imagePullSecrets: []
-nameOverride: "pinpoint-hbase"
-fullnameOverride: "pinpoint-hbase"
+nameOverride: "pinpoint-collector"
+fullnameOverride: "pinpoint-collector"
 
 ingress:
   enabled: false
@@ -28,10 +28,15 @@ ingress:
   #      - chart-example.local
 
 env:
-  hbase:
+  java:
     opts: "-Xmx1g -Xms1g"
+  hbase:
+    host: pinpoint-hbase
+    port: 2181
+  debug:
+    level: INFO
 
-resources:
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following

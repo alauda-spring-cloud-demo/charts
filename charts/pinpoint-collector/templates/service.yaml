@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pinpoint-collector.fullname" . }}
+  labels:
+{{ include "pinpoint-collector.labels" . | indent 4 }}
+spec:
+  type: ClusterIP
+  name: pinpoint-collector
+  ports:
+    - port: 9994
+      targetPort: 9994
+      protocol: TCP
+      name: tcp-9994
+    - port: 9995
+      targetPort: 9995
+      protocol: TCP
+      name: tcp-9995
+    - port: 9996
+      targetPort: 9996
+      protocol: TCP
+      name: tcp-9996
+    - port: 9995
+      targetPort: 9995
+      protocol: UDP
+      name: udp-9995
+    - port: 9996
+      targetPort: 9996
+      protocol: UDP
+      name: udp-9996
+  selector:
+    app.kubernetes.io/name: {{ include "pinpoint-collector.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
