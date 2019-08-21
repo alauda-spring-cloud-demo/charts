@@ -3,5 +3,7 @@ dependencies:
     version: 0.1.0
   - name: mysql
     version: 0.1.0
-  - name: eureka
+  - name: eureka-server
+    version: 0.1.0
+  - name: config-server
     version: 0.1.0
