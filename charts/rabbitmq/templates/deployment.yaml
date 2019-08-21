@@ -27,7 +27,7 @@ spec:
           env:
             - name: RABBITMQ_DEFAULT_USER
               value: {{ .Values.env.user }}
-            - name: RABBITMQ_DEFAULT_PASSWORD
+            - name: RABBITMQ_DEFAULT_PASS
               value: {{ .Values.env.password }}
             - name: RABBITMQ_DEFAULT_VHOST
               value: {{ .Values.env.vhost }}
