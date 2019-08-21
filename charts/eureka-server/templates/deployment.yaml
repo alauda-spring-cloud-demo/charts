@@ -33,7 +33,7 @@ spec:
               value: "{{ .Values.env.profile }}"
           {{- if .Values.env.java.opts }}
             - name: JAVA_OPTS
-              value: "{{ .Values.env.java.opts }}"
+              value: "{{ .Values.env.java.opts }} -javaagent:/pinpoint-agent/pinpoint-bootstrap-1.8.4.jar -Dpinpoint.agentId={{ .Chart.Name }} -Dpinpoint.applicationName={{ .Chart.Name }}"
           {{- end }}
           {{- if .Values.env.security.basic.enabled }}
             - name: SECURITY_BASIC_ENABLED
