@@ -33,6 +33,10 @@ spec:
               value: "{{ .Values.env.profile }}"
             - name: INJECT_ENV
               value: "{{ .Values.env.inject }}"
+            {{- if .Values.env.endpoints.websocket }}
+            - name: WS_URL
+              value: "{{ .Values.env.endpoints.websocket }}"
+            {{- end }}
             {{- if .Values.env.endpoints.gateway }}
             - name: API_URL
               value: "{{ .Values.env.endpoints.gateway }}"
