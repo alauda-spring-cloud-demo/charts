@@ -33,11 +33,10 @@ ingress:
 env:
   hbase:
     opts: "-Xmx1g -Xms1g"
-  java:
-    opts: "-Xmx1g -Xms1g"
-  hbase:
     host: pinpoint-hbase
     port: 2181
+  java:
+    opts: "-Xmx1g -Xms1g"
   debug:
     level: INFO
 
