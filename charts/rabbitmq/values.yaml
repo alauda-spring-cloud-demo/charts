@@ -14,7 +14,7 @@ nameOverride: "rabbitmq"
 fullnameOverride: "rabbitmq"
 
 service:
-  type: ClusterIP
+  type: NodePort
   amqp:
     port: 5672
   management:
