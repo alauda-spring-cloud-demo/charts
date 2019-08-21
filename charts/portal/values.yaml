@@ -33,6 +33,7 @@ ingress:
 
 env:
   profile: "dev"
+  inject: "API_URL TOKEN_URL"
   endpoints:
     gateway: "http://119.28.29.244:31943"
     token: "http://demo_client:demo_secret@119.28.29.244:30733/oauth/token"
