@@ -29,6 +29,8 @@ spec:
               value: {{ .Values.env.user }}
             - name: RABBITMQ_DEFAULT_PASSWORD
               value: {{ .Values.env.password }}
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: {{ .Values.env.vhost }}
           ports:
             - name: tcp
               containerPort: {{ .Values.service.amqp.port }}

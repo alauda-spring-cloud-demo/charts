@@ -39,6 +39,7 @@ ingress:
 env:
   user: rabbit
   password: rabbit123456
+  vhost: '/'
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
