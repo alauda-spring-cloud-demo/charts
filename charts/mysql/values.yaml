@@ -10,8 +10,8 @@ image:
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "mysql"
+fullnameOverride: "mysql"
 
 env:
   password: root123456
