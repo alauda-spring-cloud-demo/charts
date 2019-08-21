@@ -14,7 +14,7 @@ nameOverride: "config-server"
 fullnameOverride: "config-server"
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 8080
 
 ingress:
