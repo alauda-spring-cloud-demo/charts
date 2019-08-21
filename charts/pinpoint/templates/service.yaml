@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pinpoint-hbase.fullname" . }}
+  labels:
+{{ include "pinpoint-hbase.labels" . | indent 4 }}
+spec:
+  type: ClusterIP
+  name: pinpoint-hbase
+  ports:
+    - port: 2181
+      targetPort: 2181
+      protocol: TCP
+      name: tcp-2181
+    - port: 60000
+      targetPort: 60000
+      protocol: TCP
+      name: tcp-60000
+    - port: 16010
+      targetPort: 16010
+      protocol: TCP
+      name: http-16010
+    - port: 60020
+      targetPort: 60020
+      protocol: TCP
+      name: tcp-60020
+    - port: 16030
+      targetPort: 16030
+      protocol: TCP
+      name: http-16030
+  selector:
+    app.kubernetes.io/name: {{ include "pinpoint-hbase.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pinpoint-collector.fullname" . }}
+  labels:
+{{ include "pinpoint-collector.labels" . | indent 4 }}
+spec:
+  type: ClusterIP
+  name: pinpoint-collector
+  ports:
+    - port: 9994
+      targetPort: 9994
+      protocol: TCP
+      name: tcp-9994
+    - port: 9995
+      targetPort: 9995
+      protocol: TCP
+      name: tcp-9995
+    - port: 9996
+      targetPort: 9996
+      protocol: TCP
+      name: tcp-9996
+    - port: 9995
+      targetPort: 9995
+      protocol: UDP
+      name: udp-9995
+    - port: 9996
+      targetPort: 9996
+      protocol: UDP
+      name: udp-9996
+  selector:
+    app.kubernetes.io/name: {{ include "pinpoint-collector.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pinpoint-web.fullname" . }}
+  labels:
+{{ include "pinpoint-web.labels" . | indent 4 }}
+spec:
+  type: NodePort
+  name: pinpoint-collector
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http-8080
+    - port: 9997
+      targetPort: 9997
+      protocol: TCP
+      name: http-9997
+  selector:
+    app.kubernetes.io/name: {{ include "pinpoint-web.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
