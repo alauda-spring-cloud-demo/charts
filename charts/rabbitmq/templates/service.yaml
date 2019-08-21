@@ -10,11 +10,15 @@ spec:
     - port: {{ .Values.service.amqp.port }}
       targetPort: {{ .Values.service.amqp.port }}
       protocol: TCP
-      name: tcp-{{ .Values.service.amqp.port }}
+      name: tcp
     - port: {{ .Values.service.management.port }}
       targetPort: {{ .Values.service.management.port }}
       protocol: TCP
-      name: http-{{ .Values.service.management.port }}
+      name: http
+    - port: {{ .Values.service.stomp.port }}
+      targetPort: {{ .Values.service.stomp.port }}
+      protocol: TCP
+      name: stomp
   selector:
     app.kubernetes.io/name: {{ include "rabbitmq.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

@@ -19,6 +19,8 @@ service:
     port: 5672
   management:
     port: 15672
+  stomp:
+    port: 61613
 
 ingress:
   enabled: false
