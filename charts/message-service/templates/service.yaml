@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "message-service.fullname" . }}
+  labels:
+{{ include "message-service.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "message-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

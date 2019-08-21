@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "project-service.fullname" . }}
+  labels:
+{{ include "project-service.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "project-service.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "project-service.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "{{ .Values.env.profile }}"
+            {{- if .Values.env.java.opts }}
+            - name: JAVA_OPTS
+              value: "{{ .Values.env.java.opts }}"
+            {{- end }}
+            - name: SPRING_CLOUD_CONFIG_SERVICE-ID
+              value: "{{ .Values.env.config.server }}"
+            {{- if .Values.env.eureka.host }}
+            - name: EUREKA_HOST
+              value: "{{ .Values.env.eureka.host }}"
+            {{- end }}
+            {{- if .Values.env.eureka.port }}
+            - name: EUREKA_PORT
+              value: "{{ .Values.env.eureka.port }}"
+            {{- end }}
+            {{- if .Values.env.eureka.username }}
+            - name: EUREKA_USERNAME
+              value: "{{ .Values.env.eureka.username }}"
+            {{- end }}
+            {{- if .Values.env.eureka.password }}
+            - name: EUREKA_PASSWORD
+              value: "{{ .Values.env.eureka.password }}"
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
