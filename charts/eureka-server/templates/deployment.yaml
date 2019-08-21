@@ -29,6 +29,10 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
+          {{- if .Values.env.java.opts }}
+            - name: JAVA_OPTS
+              value: "{{ .Values.env.java.opts }}"
+          {{- end }}
           {{- if .Values.env.security.basic.enabled }}
             - name: SECURITY_BASIC_ENABLED
               value: "{{ .Values.env.security.basic.enabled }}"

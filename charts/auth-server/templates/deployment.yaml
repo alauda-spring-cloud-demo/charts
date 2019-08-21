@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "config-server.fullname" . }}
+  name: {{ include "auth-server.fullname" . }}
   labels:
-{{ include "config-server.labels" . | indent 4 }}
+{{ include "auth-server.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "config-server.name" . }}
+      app.kubernetes.io/name: {{ include "auth-server.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "config-server.name" . }}
+        app.kubernetes.io/name: {{ include "auth-server.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -33,16 +33,8 @@ spec:
             - name: JAVA_OPTS
               value: "{{ .Values.env.java.opts }}"
             {{- end }}
-            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
-              value: "{{ .Values.env.git.uri }}"
-            {{- if .Values.env.git.username }}
-            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME
-              value: "{{ .Values.env.git.username }}"
-            {{- end }}
-            {{- if .Values.env.git.password }}
-            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD
-              value: "{{ .Values.env.git.password }}"
-            {{- end }}
+            - name: SPRING_CLOUD_CONFIG_SERVICE-ID
+              value: "{{ .Values.env.config.server }}"
             {{- if .Values.env.eureka.host }}
             - name: EUREKA_HOST
               value: "{{ .Values.env.eureka.host }}"
