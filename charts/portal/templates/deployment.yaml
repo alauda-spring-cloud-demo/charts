@@ -31,6 +31,8 @@ spec:
           env:
             - name: PROFILE
               value: "{{ .Values.env.profile }}"
+            - name: INJECT_ENV
+              value: "{{ .Values.env.inject }}"
             {{- if .Values.env.endpoints.gateway }}
             - name: API_URL
               value: "{{ .Values.env.endpoints.gateway }}"
