@@ -25,8 +25,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: mysql
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
             - name: MYSQL_ROOT_PASSWORD

@@ -26,16 +26,19 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          env:
+            - name: PROFILE
+              value: "{{ .Values.env.profile }}"
+            {{- if .Values.env.endpoints.gateway }}
+            - name: API_URL
+              value: "{{ .Values.env.endpoints.gateway }}"
+            {{- end }}
+            {{- if .Values.env.endpoints.token }}
+            - name: TOKEN_URL
+              value: "{{ .Values.env.endpoints.token }}"
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
