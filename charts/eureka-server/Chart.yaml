@@ -3,3 +3,4 @@ appVersion: "1.0"
 description: A Helm chart for Kubernetes
 name: eureka-server
 version: 0.1.0
+icon: https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=692534457,2835488123&fm=26&gp=0.jpg
