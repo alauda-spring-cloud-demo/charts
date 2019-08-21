@@ -29,6 +29,8 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "{{ .Values.env.profile }}"
           {{- if .Values.env.java.opts }}
             - name: JAVA_OPTS
               value: "{{ .Values.env.java.opts }}"
