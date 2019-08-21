@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: dwgao/user-servie
+  repository: dwgao/user-service
   tag: latest
   pullPolicy: Always
 
