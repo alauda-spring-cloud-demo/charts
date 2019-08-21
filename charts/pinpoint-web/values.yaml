@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: dwgao/pinpoin-web
+  repository: dwgao/pinpoint-web
   tag: v1.8.4
   pullPolicy: Always
 
