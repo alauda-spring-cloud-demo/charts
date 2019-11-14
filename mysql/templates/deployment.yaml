@@ -24,6 +24,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - '--character-set-server=utf8mb4'
+            - '--collation-server=utf8mb4_general_ci'
           ports:
             - name: mysql
               containerPort: {{ .Values.service.port }}
